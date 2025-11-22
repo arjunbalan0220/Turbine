@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Summary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color:rgb(57, 114, 170);
+            text-align: center;
+        }
+        .order-container {
+            width: 50%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h3 {
+            color: #2c3e50;
+        }
+        table {
+            margin-top: 20px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td {
+            background-color: white;
+            padding: 10px;
+            text-align: left;
+        }
+        .total-price {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .pay-btn {
+            background-color:rgb(27, 37, 185);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+        .pay-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="order-container">
+        <h2>Order Summary</h2>
+        <table>
+            <tr>
+                <th>Spare Part Name</th>
+                <th>Price</th>
+            </tr>
+
+            {% for item in cart_items %}
+                <tr>
+                    <td>{{ item.spare.spare_name }}</td>
+                    <td>₹{{ item.spare.price }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <p class="total-price">Total Price: ₹{{ total_price }}</p>
+
+        <!-- Form to proceed to payment -->
+        <form method="POST" action="{% url 'create_order' spare_id=cart_items.0.spare.spare_id %}">
+            {% csrf_token %}
+            <button type="submit" class="pay-btn">Proceed to Payment</button>
+        </form>
+    </div>
+</body>
+</html>

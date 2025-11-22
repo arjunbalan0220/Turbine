@@ -1,0 +1,836 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeoSpare | Advanced Vehicle Components</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/future-2035-style.css' %}">
+  <!-- Add Google Font: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --primary: #0cefff;
+        --primary-dark: #0599a8;
+        --secondary: #fc3a6a;
+        --dark: #051c2c;
+        --light: #f0f7ff;
+        --accent: #7d40ff;
+        --success: #0adb9d;
+        --warning: #ffb30a;
+        --danger: #ff4560;
+        --neutral-100: #ffffff;
+        --neutral-200: #f7fafd;
+        --neutral-300: #e8f0f9;
+        --neutral-400: #ccd7e3;
+        --neutral-500: #8da2b5;
+        --neutral-600: #57667a;
+        --neutral-700: #2d3748;
+        --neutral-800: #1a202c;
+        --glass-bg: rgba(240, 247, 255, 0.08);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.12);
+        --neon-shadow: 0 0 15px var(--primary), 0 0 30px rgba(12, 239, 255, 0.3);
+        --card-shadow: 0 10px 30px rgba(0, 18, 38, 0.08);
+      }
+      
+      /* Global Styles */
+      body {
+        font-family: 'Inter', 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+        background: linear-gradient(135deg, var(--dark) 0%, #071926 50%, #082642 100%);
+        margin: 0;
+        padding: 0;
+        color: var(--light);
+        line-height: 1.6;
+        min-height: 100vh;
+        background-attachment: fixed;
+        overflow-x: hidden;
+      }
+      
+      /* Scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      
+      ::-webkit-scrollbar-track {
+        background: var(--dark);
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background: var(--primary-dark);
+        border-radius: 3px;
+      }
+      
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary);
+      }
+      
+      /* Futuristic Header */
+      .header {
+        background: rgba(5, 28, 44, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        padding: 15px 5%;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--glass-border);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+      }
+      
+      .company-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      
+      .logo-icon {
+        width: 40px;
+        height: 40px;
+        background: var(--primary);
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        box-shadow: var(--neon-shadow);
+      }
+      
+      .company-title {
+        color: var(--neutral-100);
+        font-size: 22px;
+        font-weight: 700;
+        margin: 0;
+        background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      
+      .nav-actions {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+      }
+      
+      .header-btn {
+        background: transparent;
+        border: 1px solid var(--glass-border);
+        color: var(--light);
+        padding: 10px 18px;
+        border-radius: 12px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        backdrop-filter: blur(4px);
+        font-size: 14px;
+      }
+      
+      .header-btn:hover {
+        border-color: var(--primary);
+        box-shadow: 0 0 12px rgba(12, 239, 255, 0.3);
+        transform: translateY(-2px);
+      }
+      
+      .logout-btn {
+        background: rgba(252, 58, 106, 0.15);
+        color: var(--secondary);
+        border-color: rgba(252, 58, 106, 0.3);
+      }
+      
+      .logout-btn:hover {
+        background: rgba(252, 58, 106, 0.25);
+        border-color: var(--secondary);
+        box-shadow: 0 0 12px rgba(252, 58, 106, 0.3);
+      }
+      
+      /* Dashboard Hero Section */
+      .dashboard-hero {
+        padding: 60px 5% 40px;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .hero-content {
+        position: relative;
+        z-index: 2;
+      }
+      
+      .welcome-title {
+        font-size: 36px;
+        font-weight: 800;
+        margin-bottom: 15px;
+        background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: -0.5px;
+      }
+      
+      .welcome-subtitle {
+        font-size: 16px;
+        font-weight: 400;
+        color: var(--neutral-500);
+        max-width: 600px;
+        margin-top: 0;
+      }
+      
+      .dashboard-stats {
+        margin-top: 30px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+      }
+      
+      .stat-card {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 20px;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        box-shadow: var(--glass-shadow);
+      }
+      
+      .stat-value {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 5px;
+        color: var(--neutral-100);
+      }
+      
+      .stat-label {
+        font-size: 14px;
+        color: var(--neutral-500);
+        margin: 0;
+      }
+      
+      /* Main Content */
+      .main-content {
+        padding: 0 5% 60px;
+      }
+      
+      /* Vehicle Inventory Section */
+      .inventory-container {
+        background: var(--neutral-100);
+        border-radius: 20px;
+        box-shadow: var(--card-shadow);
+        overflow: hidden;
+        margin-bottom: 40px;
+      }
+      
+      .inventory-header {
+        background: var(--neutral-200);
+        padding: 20px 30px;
+        border-bottom: 1px solid var(--neutral-300);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      .inventory-title {
+        color: var(--neutral-800);
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      .inventory-title i {
+        color: var(--primary);
+      }
+      
+      .inventory-actions {
+        display: flex;
+        gap: 10px;
+      }
+      
+      .search-box {
+        background: var(--neutral-100);
+        border: 1px solid var(--neutral-300);
+        border-radius: 12px;
+        padding: 8px 15px;
+        display: flex;
+        align-items: center;
+        width: 250px;
+      }
+      
+      .search-box input {
+        border: none;
+        background: transparent;
+        outline: none;
+        width: 100%;
+        font-size: 14px;
+        color: var(--neutral-700);
+      }
+      
+      .search-box i {
+        color: var(--neutral-500);
+        margin-right: 8px;
+      }
+      
+      .filter-btn {
+        background: var(--neutral-100);
+        border: 1px solid var(--neutral-300);
+        color: var(--neutral-700);
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      
+      .filter-btn:hover {
+        background: var(--neutral-200);
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+      
+      /* Table Styles */
+      .vehicle-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+      }
+      
+      .vehicle-table th {
+        background: var(--neutral-200);
+        color: var(--neutral-700);
+        font-weight: 600;
+        font-size: 14px;
+        padding: 15px 20px;
+        text-align: left;
+        border-bottom: 1px solid var(--neutral-300);
+      }
+      
+      .vehicle-table td {
+        padding: 20px;
+        border-bottom: 1px solid var(--neutral-300);
+        color: var(--neutral-800);
+        vertical-align: middle;
+        font-size: 14px;
+      }
+      
+      .vehicle-table tr:hover {
+        background-color: var(--neutral-200);
+      }
+      
+      .vehicle-table tr:last-child td {
+        border-bottom: none;
+      }
+      
+      /* Vehicle Item */
+      .vehicle-name {
+        font-weight: 600;
+        color: var(--neutral-800);
+        margin: 0;
+        font-size: 15px;
+      }
+      
+      .vehicle-meta {
+        color: var(--neutral-500);
+        font-size: 13px;
+        margin-top: 4px;
+      }
+      
+      /* Vehicle Image Cell */
+      .vehicle-img-cell {
+        width: 120px;
+      }
+      
+      .vehicle-image {
+        width: 100px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease;
+      }
+      
+      .vehicle-image:hover {
+        transform: scale(1.05);
+      }
+      
+      /* Status Badges */
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+      
+      .badge-available {
+        background: rgba(10, 219, 157, 0.1);
+        color: var(--success);
+      }
+      
+      .badge-low {
+        background: rgba(255, 179, 10, 0.1);
+        color: var(--warning);
+      }
+      
+      /* Action Buttons */
+      .action-cell {
+        width: 180px;
+      }
+      
+      .action-buttons {
+        display: flex;
+        gap: 8px;
+      }
+      
+      .btn {
+        background: var(--neutral-200);
+        border: none;
+        padding: 8px 16px;
+        border-radius: 10px;
+        font-weight: 500;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      
+      .btn-view {
+        background: rgba(12, 239, 255, 0.1);
+        color: var(--primary);
+      }
+      
+      .btn-view:hover {
+        background: rgba(12, 239, 255, 0.2);
+      }
+      
+      .btn-add {
+        background: rgba(10, 219, 157, 0.1);
+        color: var(--success);
+      }
+      
+      .btn-add:hover {
+        background: rgba(10, 219, 157, 0.2);
+      }
+      
+      /* Add Vehicle Section */
+      .action-container {
+        text-align: center;
+        margin: 30px 0;
+      }
+      
+      .btn-primary {
+        background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: var(--neon-shadow);
+      }
+      
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 20px var(--primary), 0 0 40px rgba(12, 239, 255, 0.4);
+      }
+      
+      /* Holographic Elements */
+      .hologram-effect {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(12, 239, 255, 0.1) 0%, rgba(125, 64, 255, 0.05) 50%, transparent 70%);
+        border-radius: 50%;
+        filter: blur(40px);
+        opacity: 0.6;
+        animation: float 10s ease-in-out infinite;
+      }
+      
+      .hologram-1 {
+        top: -150px;
+        right: 10%;
+      }
+      
+      .hologram-2 {
+        bottom: -100px;
+        left: 5%;
+        width: 200px;
+        height: 200px;
+        animation-delay: -5s;
+      }
+      
+      /* Smart Grid For 3D Appearance */
+      .smart-grid {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: 
+          linear-gradient(rgba(12, 239, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(12, 239, 255, 0.03) 1px, transparent 1px);
+        background-size: 40px 40px;
+        pointer-events: none;
+        z-index: 1;
+      }
+      
+      /* Footer */
+      .footer {
+        background: rgba(5, 28, 44, 0.9);
+        backdrop-filter: blur(10px);
+        padding: 30px 5%;
+        text-align: center;
+        border-top: 1px solid var(--glass-border);
+      }
+      
+      .footer-text {
+        color: var(--neutral-500);
+        font-size: 14px;
+        margin: 0;
+      }
+      
+      /* Animations */
+      @keyframes float {
+        0%, 100% {
+          transform: translateY(0) scale(1);
+        }
+        50% {
+          transform: translateY(-20px) scale(1.1);
+        }
+      }
+      
+      @keyframes pulse {
+        0%, 100% {
+          opacity: 0.5;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      
+      /* Responsive Design */
+      @media (max-width: 1200px) {
+        .dashboard-stats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .welcome-title {
+          font-size: 28px;
+        }
+        
+        .dashboard-stats {
+          grid-template-columns: 1fr;
+        }
+        
+        .inventory-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 15px;
+        }
+        
+        .inventory-actions {
+          width: 100%;
+          flex-direction: column;
+          gap: 10px;
+        }
+        
+        .search-box {
+          width: 100%;
+        }
+        
+        .action-cell {
+          width: auto;
+        }
+        
+        .vehicle-img-cell {
+          display: none;
+        }
+        
+        .vehicle-table {
+          display: block;
+          overflow-x: auto;
+        }
+      }
+      
+      /* Advanced 2035 Features */
+      .ai-suggestion {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 15px 20px;
+        max-width: 300px;
+        box-shadow: var(--glass-shadow);
+        color: var(--light);
+        font-size: 14px;
+        animation: fadeInUp 0.5s ease;
+        z-index: 1000;
+      }
+      
+      .ai-suggestion-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+      
+      .ai-icon {
+        color: var(--primary);
+        animation: pulse 2s infinite;
+      }
+      
+      .ai-title {
+        font-weight: 600;
+        margin: 0;
+      }
+      
+      .ai-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: none;
+        border: none;
+        color: var(--neutral-500);
+        cursor: pointer;
+        font-size: 12px;
+      }
+      
+      .ai-message {
+        margin: 0;
+        line-height: 1.5;
+      }
+      
+      .auto-3d-preview {
+        position: fixed;
+        top: 120px;
+        right: 30px;
+        width: 160px;
+        height: 160px;
+        perspective: 600px;
+        display: none;
+      }
+      
+      .preview-3d {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transform: rotateY(45deg) rotateX(20deg);
+        animation: rotate3D 20s linear infinite;
+      }
+      
+      @keyframes rotate3D {
+        0% {
+          transform: rotateY(0deg) rotateX(20deg);
+        }
+        100% {
+          transform: rotateY(360deg) rotateX(20deg);
+        }
+      }
+      
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      /* Interactive Status Indicator */
+      .interactive-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+      }
+      
+      .status-connected {
+        background: var(--success);
+        box-shadow: 0 0 10px var(--success);
+        animation: pulse 2s infinite;
+      }
+      
+      .quantum-scan-btn {
+        background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 100%);
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-weight: 500;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      
+      .quantum-scan-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 15px rgba(12, 239, 255, 0.4);
+      }
+</style>
+</head>
+
+<body>
+  <!-- Holographic Effects -->
+  <div class="hologram-effect hologram-1"></div>
+  <div class="hologram-effect hologram-2"></div>
+  <div class="smart-grid"></div>
+  
+  <!-- Header Section -->
+  <header class="header">
+    <div class="company-logo">
+      <div class="logo-icon">
+        <i class="fas fa-cog"></i>
+      </div>
+      <h2 class="company-title">{{ comp.company_name }}</h2>
+    </div>
+      <a href="{% url 'company_logout' %}" class="header-btn logout-btn">
+        <i class="fas fa-power-off"></i>
+        Logout
+      </a>
+    </div>
+  </header>
+  
+  <!-- Dashboard Hero Section -->
+  <section class="dashboard-hero">
+    <div class="hero-content">
+      <h1 class="welcome-title">Welcome, {{ comp.company_name }}</h1>
+      <p class="welcome-subtitle">Access your neede spare from Turbine Spare hub. All vehicle components are synced with the global parts network.</p>
+      
+      <div class="dashboard-stats">
+        <div class="stat-card">
+          <h3 class="stat-value">{{ vehicles|length }}</h3>
+          <p class="stat-label">Active Vehicles</p>
+        </div>
+        <div class="stat-card">
+          <h3 class="stat-value">142</h3>
+          <p class="stat-label">Total Parts</p>
+        </div>
+        <div class="stat-card">
+          <h3 class="stat-value">98.7%</h3>
+          <p class="stat-label">Compatibility Rating</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Main Content -->
+  <section class="main-content">
+    <!-- Vehicle Inventory -->
+    <div class="inventory-container">
+      <div class="inventory-header">
+        <h2 class="inventory-title">
+          <i class="fas fa-car-battery"></i>
+          Vehicle Component Database
+        </h2>
+      </div>
+      
+      <table class="vehicle-table">
+        <thead>
+          <tr>
+            <th>Vehicle Model</th>
+            <th>Type</th>
+            <th>Drive System</th>
+            <th>Energy Source</th>
+            <th>Image</th>
+            <th>Components</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in vehicles %}
+          <tr>
+            <td>
+              <h3 class="vehicle-name">{{ r.Vehicle_name }}</h3>
+              <div class="vehicle-meta">ID: VS-{{ r.Vehicle_id }}</div>
+            </td>
+            <td>{{ r.Type }}</td>
+            <td>{{ r.Wheel }}-Wheel</td>
+            <td>
+              {% if r.Fuel == "Electric" %}
+                <span class="status-badge badge-available">{{ r.Fuel }}</span>
+              {% else %}
+                <span class="status-badge badge-low">{{ r.Fuel }}</span>
+              {% endif %}
+            </td>
+            <td class="vehicle-img-cell">
+              <img src="{{ r.image.url }}" alt="{{ r.Vehicle_name }}" class="vehicle-image">
+            </td>
+            <td>
+              <div class="action-buttons">
+                <a href="{% url 'individual_spare' r.Vehicle_id %}" class="btn btn-view">
+                  <i class="fas fa-toolbox"></i>
+                  View Components
+                </a>
+              </div>
+            </td>
+            <td class="action-cell">
+              <div class="action-buttons">
+                <a href="{% url 'company_spare' r.Vehicle_id %}" class="btn btn-add">
+                  <i class="fas fa-plus-circle"></i>
+                  Add Component
+                </a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Add Vehicle Button -->
+    <div class="action-container">
+      <a href="{% url 'company_add' %}" class="btn-primary">
+        <i class="fas fa-car"></i>
+        Register New Vehicle
+      </a>
+    </div>
+  </section>
+  
+  
+  <!-- Footer -->
+  <footer class="footer">
+    <p class="footer-text">© 2025 Turbine Spare Hub | Global Part Sync Active | 100% Trusted</p>
+  </footer>
+  
+  <!-- Simplified Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Simple close functionality for AI suggestion
+      document.querySelector('.ai-close').addEventListener('click', function() {
+        document.querySelector('.ai-suggestion').style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>

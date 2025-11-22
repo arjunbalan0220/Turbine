@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+            line-height: 1.4;
+            color: #333;
+            background-color: #f8f8f8; /* Light gray fallback */
+            background-color: #fff;
+            padding: 20px;
+        }
+        .invoice-box {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            border: 1px solid #ccc; /* Subtle border */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            font-size: 16px;
+            line-height: 24px;
+            font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+            color: #333;
+            background-color: #fff;
+        }
+        .invoice-box table {
+            width: 100%;
+            line-height: inherit;
+            text-align: left;
+        }
+        .invoice-box table td {
+            padding: 5px;
+            vertical-align: top;
+        }
+        .invoice-box table tr td:nth-child(2) {
+            text-align: right;
+        }
+        .invoice-box table tr.top table td {
+            padding-bottom: 20px;
+        }
+        .invoice-box table tr.top table td.title h1 {
+            font-size: 45px;
+            line-height: 45px;
+            color: #00bcd4; /* Cyan for the title */
+            margin: 0;
+        }
+        .invoice-box table tr.information table td {
+            padding-bottom: 40px;
+        }
+        .invoice-box table tr.heading td {
+            background: #eee; /* Light gray heading background */
+            border-bottom: 1px solid #ccc;
+            font-weight: bold;
+            padding: 8px;
+            color: #333;
+        }
+        .invoice-box table tr.item td {
+            border-bottom: 1px solid #eee;
+            padding: 8px;
+            color: #333;
+        }
+        .invoice-box table tr.item.last td {
+            border-bottom: none;
+        }
+        .invoice-box table tr.total td:nth-child(2) {
+            border-top: 2px solid #ccc;
+            font-weight: bold;
+            color: #000; /* Black for the total */
+            padding-top: 10px;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .text-left {
+            text-align: left;
+        }
+        .font-bold {
+            font-weight: bold;
+            color: #000; /* Black for bold text */
+        }
+        .invoice-details-header {
+            font-weight: bold;
+            color: #000; /* Black for section headers */
+            margin-bottom: 5px;
+        }
+        .invoice-details-value {
+            color: #333;
+        }
+        .thank-you-message {
+            margin-top: 30px;
+            text-align: center;
+            color: #000; /* Black for thank you message */
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-box">
+        <table cellpadding="0" cellspacing="0">
+            <tr class="top">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td class="title">
+                                <h1>TURBINE</h1>
+                            </td>
+                            <td class="text-right">
+                                Invoice # INV-{{ payment_info.razorpay_payment_id|slice:":8" }}<br>
+                                Date: {{ payment_info.timestamp|date:"F j, Y" }}<br>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr class="information">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="invoice-details-header">Customer Details:</div>
+                                <div class="invoice-details-value">{{ payment_info.name }}</div>
+                                <div class="invoice-details-value">{{ payment_info.email }}</div>
+                                <div class="invoice-details-value">{{ payment_info.contact }}</div>
+                            </td>
+                            <td class="text-right">
+                                <div class="invoice-details-header">Seller:</div>
+                                <div class="invoice-details-value">Turbine</div>
+                                <div class="invoice-details-value">India</div>
+                                <div class="invoice-details-value">turbinemotosparehub@gmail.com</div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr class="heading">
+                <td>Item</td>
+                <td class="text-right">Amount</td>
+            </tr>
+
+            <tr class="item">
+                <td>{{ payment_info.spare_name }}</td>
+                <td class="text-right">₹{{ payment_info.amount }}</td>
+            </tr>
+
+            <tr class="total">
+                <td></td>
+                <td class="text-right font-bold">Total: ₹{{ payment_info.amount }}</td>
+            </tr>
+        </table>
+
+        <p class="thank-you-message">Thank you for your purchase of vehicle spare parts!</p>
+    </div>
+</body>
+</html>

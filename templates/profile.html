@@ -1,0 +1,265 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>user profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            font-family: sans-serif;
+            background-color: #111; /* Dark background */
+            color: #fff; /* White text */
+            margin: 0;
+            padding-top: 50px; /* Add some top padding for better spacing */
+        }
+
+        .container {
+            max-width: 960px; /* Adjust container width as needed */
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #222; /* Slightly lighter dark background */
+            border-radius: 10px;
+            
+        }
+
+        .profile-nav,
+        .profile-info {
+            margin-top: 20px;
+        }
+
+        .panel {
+            background-color: #333; /* Even lighter dark background for panels */
+            border: 1px solid #333;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .user-heading {
+            background: #00ffff; /* Cyan heading background */
+            color: #111; /* Dark text on heading */
+            border-radius: 5px 5px 0 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .user-heading h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .user-heading p {
+            font-size: 14px;
+            color: #ddd;
+        }
+
+        .nav-pills {
+            margin-top: 10px;
+        }
+
+        .nav-pills>li>a {
+            color: #aaa;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .nav-pills>li>a:hover,
+        .nav-pills>li.active>a {
+            background-color: #00dddd; /* Slightly darker cyan on hover/active */
+            color: #111;
+        }
+
+        .nav-pills>li>a i {
+            margin-right: 8px;
+            color: #ccc;
+        }
+
+        .panel-body {
+            padding: 20px;
+            color: #eee;
+        }
+
+        .bio-graph-heading {
+            background: #00ffff; /* Cyan heading background */
+            color: #111; /* Dark text on heading */
+            text-align: center;
+            padding: 30px;
+            border-radius: 5px 5px 0 0;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .bio-graph-info h1 {
+            font-size: 22px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #00ffff; /* Cyan detail heading */
+        }
+
+        .bio-row {
+            width: 50%;
+            float: left;
+            margin-bottom: 15px;
+            padding: 0 15px;
+        }
+
+        .bio-row p span {
+            display: inline-block;
+            width: 120px;
+            font-weight: bold;
+            color: #ccc;
+        }
+
+        .bio-row p a {
+            color: #00ffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .bio-row p a:hover {
+            color: #00dddd;
+        }
+
+        .panel-footer {
+            background-color: #333;
+            border-top: 1px solid #444;
+            padding: 15px;
+            border-radius: 0 0 5px 5px;
+            text-align: right;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            color: #333;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+        .bio-desk h4 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .bio-desk h4 a {
+            color: #00ffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .bio-desk h4 a:hover {
+            color: #00dddd;
+        }
+
+        .col-md-6 {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <div class="container bootstrap snippets bootdey">
+        <form action="{% url 'profile' %}" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="profile-nav col-md-3">
+                    <div class="panel">
+                        <div class="user-heading">
+                            <h1>{{User.fname}} {{User.mname}} {{User.lname}}</h1>
+                        </div>
+
+                        <ul class="nav nav-pills nav-stacked">
+                            <li class="active"><a href="#"> <i class="fa fa-user"></i> Profile</a></li>
+                            <li><a href="#"> <i class="fa fa-calendar"></i> Recent Activity <span
+                                        class="label label-warning pull-right r-activity">9</span></a></li>
+                            <li><a href="#"> <i class="fa fa-edit"></i> Edit profile</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="profile-info col-md-9">
+
+                    <footer class="panel-footer">
+                        <button class="btn btn-warning pull-right"><a href="{% url 'user_logout' %}">Logout</a></button>
+                    </footer>
+
+                    <div class="panel">
+                        <div class="bio-graph-heading">
+                            Account center.
+                        </div>
+                        <div class="panel-body bio-graph-info">
+                            <h1>Details</h1>
+                            <div class="row">
+                                <div class="bio-row">
+                                    <p><span>Nick Name </span>: {{User.fname}}</p>
+                                </div>
+
+
+                                <div class="bio-row">
+                                    <p><span>Email </span>: <a href="mailto:{{User.email}}">{{User.email}}</a></p>
+                                </div>
+                                <div class="bio-row">
+                                    <p><span>Mobile </span>: {{User.phone}}</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="panel">
+                                    <div class="panel-body">
+
+                                        <div class="bio-desk">
+                                            <h4 class="red"><a href="{% url 'cart_viewprofile' %}"
+                                                    class="view-cart-btn">🛒 View Cart</a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="panel">
+                                    <div class="panel-body">
+
+                                        <div class="bio-desk">
+                                            <h4 class="terques"><a href="{% url 'orders' %}" class="view-cart-btn">View
+                                                    Orders</a></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,250 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Management | 2035</title>
+    <style>
+        :root {
+            --navy: #0a192f;
+            --cyan: #64ffda;
+            --light-cyan: #a8fff9;
+            --white: #ffffff;
+            --dark-cyan: #00b9ae;
+            --shadow-color: rgba(100, 255, 218, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--navy);
+            color: var(--white);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(100, 255, 218, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 80% 10%, rgba(100, 255, 218, 0.03) 0%, transparent 25%);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background-color: rgba(15, 30, 60, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px var(--shadow-color), 
+                        0 0 0 1px rgba(100, 255, 218, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--cyan), var(--light-cyan), var(--cyan));
+            z-index: 2;
+        }
+
+        h2 {
+            font-weight: 300;
+            margin-bottom: 30px;
+            color: var(--white);
+            font-size: 28px;
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background-color: var(--cyan);
+        }
+
+        form {
+            margin: 30px 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: var(--white);
+            font-weight: 300;
+        }
+
+        input[type="number"] {
+            background-color: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            padding: 14px 20px;
+            border-radius: 12px;
+            color: var(--white);
+            font-size: 16px;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--cyan);
+            box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.2);
+        }
+
+        button[type="submit"] {
+            background-color: transparent;
+            color: var(--cyan);
+            border: 1px solid var(--cyan);
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-weight: 500;
+        }
+
+        button[type="submit"]::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(100, 255, 218, 0.2), transparent);
+            transition: all 0.6s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: rgba(100, 255, 218, 0.1);
+        }
+
+        button[type="submit"]:hover::before {
+            left: 100%;
+        }
+
+        p {
+            margin: 25px 0;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+
+        p::before {
+            content: "•";
+            color: var(--cyan);
+            margin-right: 10px;
+            font-size: 24px;
+        }
+
+        a {
+            display: inline-block;
+            color: var(--cyan);
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            position: relative;
+        }
+
+        a::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--cyan);
+            transition: width 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--light-cyan);
+        }
+
+        a:hover::after {
+            width: 100%;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-size: 14px;
+            position: relative;
+            border-left: 3px solid;
+        }
+
+        .alert-success {
+            background-color: rgba(0, 185, 174, 0.1);
+            border-color: var(--dark-cyan);
+            color: var(--light-cyan);
+        }
+
+        .alert-error {
+            background-color: rgba(255, 76, 76, 0.1);
+            border-color: #ff4c4c;
+            color: #ffa0a0;
+        }
+
+        .alert-warning {
+            background-color: rgba(255, 187, 51, 0.1);
+            border-color: #ffbb33;
+            color: #ffe0a3;
+        }
+
+        .alert-info {
+            background-color: rgba(100, 255, 218, 0.1);
+            border-color: var(--cyan);
+            color: var(--light-cyan);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px;
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Add Stock for "{{ spare.spare_name }}"</h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            <label for="quantity">Enter quantity to add:</label>
+            <input type="number" name="quantity" id="quantity" min="1" required>
+            <button type="submit">Add Stock</button>
+        </form>
+        
+        <p>Current Stock: {{ spare.stock }}</p>
+        <a href="{% url 'company_spare' spare.vehicle.Vehicle_id %}">← Back to Spare List</a>
+        
+        {% if messages %}
+            <div style="margin-top: 20px;">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

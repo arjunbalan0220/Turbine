@@ -1,0 +1,265 @@
+{% load static %} 
+<!DOCTYPE html> 
+<html lang="en"> 
+<head>     
+    <meta charset="UTF-8">     
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">     
+    <link rel="stylesheet" href="styles.css">     
+    <title>Accessory View</title>     
+    <style>         
+        * {             
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }                  
+        
+        body {                          
+            background-image: url({% static 'images/access.jpg' %});             
+            background-repeat: no-repeat;             
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Exo 2', 'Rajdhani', sans-serif;             
+            background-color: #000;
+            color: #e0f7ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 30, 60, 0.92), rgba(0, 0, 0, 0.95));
+            z-index: -1;
+        }
+        
+        form {
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        h1 {             
+            margin-top: 60px;
+            margin-bottom: 40px;
+            font-weight: 700;
+            color: #00e1ff;
+            line-height: 1.2;
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(0, 225, 255, 0.5),
+                         0 0 30px rgba(0, 225, 255, 0.3);
+            position: relative;
+            text-align: center;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00e1ff, transparent);
+        }
+        
+        button {             
+            background: linear-gradient(135deg, #180764, #000d40);
+            border: 1px solid #00e1ff;
+            color: #00e1ff;
+            padding: 12px 28px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 3px 2px;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 10px rgba(0, 225, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        button:hover {
+            background: linear-gradient(135deg, #000d40, #180764);
+            box-shadow: 0 0 20px rgba(0, 225, 255, 0.6);
+            transform: translateY(-3px);
+        }
+        
+        button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 225, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        button:hover::before {
+            opacity: 1;
+        }
+                 
+        .spec-table {             
+            margin: 30px auto;
+            width: 600px;
+            background: rgba(0, 10, 30, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 225, 255, 0.2);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5),
+                       0 0 20px rgba(0, 225, 255, 0.2);
+            transform-origin: center;
+            transform: perspective(1000px) rotateX(0deg);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+        
+        .spec-table:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6),
+                       0 0 30px rgba(0, 225, 255, 0.3);
+            transform: perspective(1000px) rotateX(2deg) translateY(-5px);
+        }
+                 
+        .spec-row {             
+            display: flex;             
+            justify-content: space-between;             
+            padding: 20px;
+            border-bottom: 1px solid rgba(0, 225, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .spec-row::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 225, 255, 0.3), transparent);
+        }
+                 
+        .spec-row:last-child {             
+            border-bottom: none;
+        }
+        
+        .spec-row:last-child::after {
+            display: none;
+        }
+                 
+        .spec-title {             
+            font-weight: 500;             
+            color: #e0f7ff;
+            letter-spacing: 1px;
+        }
+                 
+        .spec-value {             
+            font-weight: bold;             
+            color: #ffffff;
+            text-shadow: 0 0 5px rgba(0, 225, 255, 0.3);
+            letter-spacing: 0.5px;
+            line-height: 1.6;
+        }
+        
+        .spec-value img {
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+            object-fit: cover;
+            border: 2px solid rgba(0, 225, 255, 0.1);
+        }
+        
+        .spec-value img:hover {
+            transform: scale(1.03);
+            border: 2px solid rgba(0, 225, 255, 0.5);
+        }
+                 
+        .spec-note {             
+            font-size: 0.9em;             
+            color: #a0d8ff;             
+            padding: 8px 16px;
+        }
+                 
+        .highlight {             
+            color: #00e1ff;             
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 225, 255, 0.5);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+                margin-top: 40px;
+            }
+            
+            .spec-table {
+                width: 90%;
+                margin: 20px auto;
+            }
+            
+            .spec-row {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .spec-value img {
+                width: 100%;
+                height: auto;
+                max-width: 230px;
+            }
+            
+            button {
+                width: 100%;
+                margin-top: 15px;
+            }
+        }
+    </style> 
+</head> 
+<body>             
+    <form action="{% url 'accessoryview' %}" method="post">     
+        {% csrf_token %}     
+        <center><h1>RIDING BOOTS</h1></center>     
+        {% for r in acc %}         
+            {% if r.acc_type == 'boot' %}                       
+                <div class="spec-table">                 
+                    <div class="spec-row">                                      
+                        <div class><img src="{{r.image.url}}" width="230" height="200"></div>                                          
+                        <div class="spec-value"><br><br><br>{{r.acc_name}}<br><br>                         
+                            <br><br><br>                     
+                            Price = {{r.acc_prize}}/-
+                        </div>                 
+                    </div>                 
+                    <div class="spec-row">                     
+                        <div class="spec-value"></div>                     
+                        <div class="spec-value">                         
+                            <button type="submit" name="id" value="{{ r.id }}">View more...</button>
+                        </div>                                      
+                    </div>             
+                </div>         
+            {% endif %}     
+        {% endfor %}     
+    </form>      
+</body> 
+</html>

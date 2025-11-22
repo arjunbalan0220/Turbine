@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e6ddf3;
+            color: #333;
+        }
+        
+        header {
+            background:#6524be;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .about-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            color: #6524be;
+        }
+        
+        .team {
+            margin-top: 20px;
+        }
+        
+        .team-member {
+            display: inline-block;
+            width: 45%;
+            margin: 10px;
+            text-align: center;
+        }
+        
+        .team-member img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            background: #6524be;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        h5{
+            margin-left : 1200px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>About Us</h1>
+        
+    </header>
+    <a href="{% url 'Home' %}" ><h5> HOME </h5></a>
+    <section class="about-container">
+        <div class="about-content">
+            <h2>Welcome to Turbine</h2>
+            <p>We are dedicated to providing the best online shopping experience with high-quality products at the best prices.</p>
+            <p>Founded in 2020, our mission is to make online shopping simple, enjoyable, and secure.</p>
+        </div>
+        
+        <div class="team">
+            <h2>Meet Our Team</h2>
+            <div class="team-member">
+                <img src="{% static 'images/profileimage.png' %}" alt="Founder">
+                <h3>Mr XYZ</h3>
+                <p>Founder & CEO</p>
+            </div>
+            <div class="team-member">
+                <img src="{% static 'images/profileimage.png' %}" alt="Marketing Head">
+                <h3>Ms PQR</h3>
+                <p>Head of Marketing</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 TURBINE. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

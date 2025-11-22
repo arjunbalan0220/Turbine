@@ -1,0 +1,310 @@
+{% load static %} 
+<!DOCTYPE html> 
+<html lang="en"> 
+<head>     
+    <meta charset="UTF-8">     
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">     
+    <title>MTTHUNDER-2 PRO Helmet</title>     
+    <style>         
+        body {             
+            font-family: 'Montserrat', 'Segoe UI', sans-serif;             
+            margin: 0;             
+            padding: 0;             
+            background-color: #000;             
+            background-image: url({% static 'images/abc.jpg' %});             
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;             
+            min-height: 100vh;             
+            display: flex;             
+            align-items: center;
+            position: relative;
+            color: #333;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 20, 40, 0.85), rgba(0, 0, 0, 0.92));
+            z-index: -1;
+        }
+        
+        .container {             
+            width: 90%;
+            max-width: 1200px;             
+            margin: 120px auto 60px;             
+            background: rgba(255, 255, 255, 0.95);             
+            padding: 40px;             
+            border-radius: 16px;             
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25), 
+                        0 0 20px rgba(0, 193, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 193, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #00c1ff, #003366, #00c1ff);
+            background-size: 200% 100%;
+            animation: gradientMove 8s infinite linear;
+        }
+        
+        @keyframes gradientMove {
+            0% {background-position: 0% 50%}
+            50% {background-position: 100% 50%}
+            100% {background-position: 0% 50%}
+        }
+        
+        .product-header {             
+            display: flex;             
+            align-items: flex-start;             
+            gap: 40px;
+            position: relative;
+        }
+        
+        .product-header img {             
+            max-width: 350px;
+            min-width: 300px;
+            height: auto;             
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            object-fit: cover;
+            border: 1px solid rgba(0, 193, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .product-header img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .product-details {             
+            flex: 1;
+            padding-right: 20px;
+        }
+        
+        .product-details h1 {             
+            font-size: 32px;             
+            margin: 0 0 15px;             
+            font-weight: 700;
+            color: #003366;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+            position: relative;
+            padding-bottom: 12px;
+        }
+        
+        .product-details h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: #00c1ff;
+        }
+        
+        .product-details .price {             
+            font-size: 28px;             
+            color: #003366;             
+            margin: 20px 0;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .product-details .price::before {
+            content: '₹';
+            font-size: 22px;
+            margin-right: 5px;
+            opacity: 0.8;
+        }
+        
+        .product-details p {             
+            font-size: 17px;             
+            color: #333;             
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .product-details ul {             
+            list-style: none;             
+            padding-left: 5px;
+            margin: 20px 0;
+        }
+        
+        .product-details ul li {             
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 25px;
+            color: #444;
+        }
+        
+        .product-details ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #00c1ff;
+            font-weight: bold;
+        }
+        
+        .product-details .size-info {             
+            margin: 15px 0;             
+            font-size: 15px;             
+            color: #555;
+            padding: 10px;
+            background: #f5f9ff;
+            border-left: 3px solid #00c1ff;
+            border-radius: 4px;
+        }
+        
+        .actions {             
+            display: flex;             
+            gap: 15px;             
+            margin-top: 30px;
+        }
+        
+        .actions button {             
+            background: linear-gradient(135deg, #003366, #00253e);             
+            color: #fff;             
+            border: none;             
+            padding: 14px 28px;             
+            font-size: 16px;             
+            border-radius: 30px;             
+            cursor: pointer;             
+            transition: all 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(0, 51, 102, 0.2);
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .actions button:first-child {
+            background: linear-gradient(135deg, #00c1ff, #003366);
+        }
+        
+        .actions button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+        }
+        
+        .actions button:hover {             
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 51, 102, 0.3);
+        }
+        
+        .actions button:hover::before {
+            left: 100%;
+        }
+        
+        .actions button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 8px rgba(0, 51, 102, 0.3);
+        }
+        
+        .stock {             
+            color: #00a651;             
+            font-weight: 600;             
+            margin: 20px 0;
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background-color: rgba(0, 166, 81, 0.1);
+            font-size: 15px;
+        }
+        
+        .stock::before {
+            content: '•';
+            display: inline-block;
+            margin-right: 8px;
+            font-size: 24px;
+            line-height: 0;
+            vertical-align: middle;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        
+        @media (max-width: 900px) {
+            .container {
+                width: 85%;
+                padding: 30px;
+                margin: 100px auto 40px;
+            }
+            
+            .product-header {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .product-header img {
+                max-width: 100%;
+                min-width: unset;
+            }
+            
+            .product-details h1 {
+                font-size: 26px;
+            }
+            
+            .product-details .price {
+                font-size: 24px;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .actions button {
+                width: 100%;
+            }
+        }
+    </style> 
+</head> 
+<body>     
+    <form action="" method="post">     
+    {% csrf_token %}       
+    {% for r in acc %}     
+    <div class="container">         
+        <div class="product-header">             
+            <img src="{{r.image.url}}" width="230" height="200" alt="Image">             
+            <div class="product-details">                 
+                <h1>{{r.acc_name}}</h1>                 
+                <p class="price">{{r.acc_prize}}/-</p><br>                 
+                <p>{{r.acc_desc}}.</p>                                  
+                <p class="size-info"></p>                 
+                <p class="stock">In Stock</p>                 
+                <div class="actions">                     
+                    <button>Add to Cart</button>                     
+                    <button>BUY</button>                 
+                </div>             
+            </div>         
+        </div>     
+    </div>     
+    {% endfor %}     
+    </form> 
+</body> 
+</html>

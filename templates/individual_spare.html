@@ -1,0 +1,581 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeoSpare | {{ vehicle.Vehicle_name }} Components</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/future-2035-spare-parts-detail.css' %}">
+    <style>
+        :root {
+            --primary: #0cefff;
+            --primary-dark: #0599a8;
+            --secondary: #fc3a6a;
+            --dark: #051c2c;
+            --light: #f0f7ff;
+            --accent: #7d40ff;
+            --success: #0adb9d;
+            --warning: #ffb30a;
+            --danger: #ff4560;
+            --neutral-100: #ffffff;
+            --neutral-200: #f7fafd;
+            --neutral-300: #e8f0f9;
+            --neutral-400: #ccd7e3;
+            --neutral-500: #8da2b5;
+            --neutral-600: #57667a;
+            --neutral-700: #2d3748;
+            --neutral-800: #1a202c;
+            --glass-bg: rgba(240, 247, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.12);
+            --neon-shadow: 0 0 15px var(--primary), 0 0 30px rgba(12, 239, 255, 0.3);
+            --card-shadow: 0 10px 30px rgba(0, 18, 38, 0.08);
+          }
+          
+          /* Global Styles */
+          body {
+            font-family: 'Inter', 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, #071926 50%, #082642 100%);
+            margin: 0;
+            padding: 0;
+            color: var(--light);
+            line-height: 1.6;
+            min-height: 100vh;
+            background-attachment: fixed;
+            overflow-x: hidden;
+          }
+          
+          /* Scrollbar */
+          ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+          }
+          
+          ::-webkit-scrollbar-track {
+            background: var(--dark);
+          }
+          
+          ::-webkit-scrollbar-thumb {
+            background: var(--primary-dark);
+            border-radius: 3px;
+          }
+          
+          ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+          }
+          
+          /* Header & Titles */
+          h1 {
+            font-size: 36px;
+            font-weight: 800;
+            text-align: center;
+            margin: 60px 0 20px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 2;
+          }
+          
+          h2 {
+            font-size: 24px;
+            font-weight: 600;
+            text-align: center;
+            color: var(--neutral-400);
+            margin: 50px 0;
+          }
+          
+          /* Holographic Elements */
+          .hologram-effect {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(12, 239, 255, 0.1) 0%, rgba(125, 64, 255, 0.05) 50%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.6;
+            animation: float 10s ease-in-out infinite;
+            z-index: 0;
+          }
+          
+          .hologram-1 {
+            top: -150px;
+            right: 10%;
+          }
+          
+          .hologram-2 {
+            bottom: -100px;
+            left: 5%;
+            width: 200px;
+            height: 200px;
+            animation-delay: -5s;
+          }
+          
+          /* Smart Grid For 3D Appearance */
+          .smart-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+              linear-gradient(rgba(12, 239, 255, 0.03) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(12, 239, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 1;
+          }
+          
+          /* Table Container */
+          .parts-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto 80px;
+            background: var(--neutral-100);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+          }
+          
+          .parts-header {
+            background: var(--neutral-200);
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--neutral-300);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+          
+          .parts-title {
+            color: var(--neutral-800);
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+          }
+          
+          .parts-title i {
+            color: var(--primary);
+          }
+          
+          .parts-meta {
+            color: var(--neutral-500);
+            font-size: 14px;
+          }
+          
+          /* Table Styles */
+          table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            color: var(--neutral-800);
+          }
+          
+          th {
+            background: var(--neutral-200);
+            color: var(--neutral-700);
+            font-weight: 600;
+            font-size: 14px;
+            padding: 15px 20px;
+            text-align: left;
+            border: none;
+            border-bottom: 1px solid var(--neutral-300);
+          }
+          
+          td {
+            padding: 20px;
+            border: none;
+            border-bottom: 1px solid var(--neutral-300);
+            color: var(--neutral-800);
+            vertical-align: middle;
+            font-size: 14px;
+            text-align: left;
+          }
+          
+          tr:hover {
+            background-color: var(--neutral-200);
+          }
+          
+          tr:last-child td {
+            border-bottom: none;
+          }
+          
+          /* Part Item Styling */
+          .part-name {
+            font-weight: 600;
+            color: var(--neutral-800);
+            margin: 0;
+            font-size: 15px;
+          }
+          
+          .part-type {
+            display: inline-block;
+            padding: 5px 12px;
+            background: var(--neutral-200);
+            border-radius: 20px;
+            color: var(--neutral-700);
+            font-size: 13px;
+            font-weight: 500;
+          }
+          
+          .part-price {
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 16px;
+          }
+          
+          /* Part Image Styling */
+          .part-image {
+            width: 120px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+          }
+          
+          .part-image:hover {
+            transform: scale(1.05);
+          }
+          
+          /* Stock Indicator */
+          .stock-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+          }
+          
+          .stock-value {
+            font-weight: 600;
+            color: var(--neutral-800);
+          }
+          
+          .stock-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+          }
+          
+          .stock-high {
+            background: rgba(10, 219, 157, 0.1);
+            color: var(--success);
+          }
+          
+          .stock-medium {
+            background: rgba(255, 179, 10, 0.1);
+            color: var(--warning);
+          }
+          
+          .stock-low {
+            background: rgba(255, 69, 96, 0.1);
+            color: var(--danger);
+          }
+          
+          /* Action Buttons */
+          .btn {
+            background: var(--neutral-200);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+          }
+          
+          .btn-add {
+            background: rgba(10, 219, 157, 0.1);
+            color: var(--success);
+          }
+          
+          .btn-add:hover {
+            background: rgba(10, 219, 157, 0.2);
+          }
+          
+          .btn-back {
+            background: rgba(12, 239, 255, 0.1);
+            color: var(--primary);
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+          }
+          
+          .btn-back:hover {
+            background: rgba(12, 239, 255, 0.2);
+          }
+          
+          /* No Parts Message */
+          .no-parts-message {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            background: var(--neutral-100);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            margin: 40px auto;
+            max-width: 600px;
+          }
+          
+          .no-parts-icon {
+            font-size: 48px;
+            color: var(--neutral-400);
+            margin-bottom: 20px;
+          }
+          
+          .no-parts-text {
+            font-size: 20px;
+            color: var(--neutral-700);
+            margin-bottom: 30px;
+          }
+          
+          .btn-create {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--neon-shadow);
+          }
+          
+          .btn-create:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px var(--primary), 0 0 40px rgba(12, 239, 255, 0.4);
+          }
+          
+          /* Animations */
+          @keyframes float {
+            0%, 100% {
+              transform: translateY(0) scale(1);
+            }
+            50% {
+              transform: translateY(-20px) scale(1.1);
+            }
+          }
+          
+          @keyframes pulse {
+            0%, 100% {
+              opacity: 0.5;
+            }
+            50% {
+              opacity: 1;
+            }
+          }
+          
+          /* Responsive Design */
+          @media (max-width: 768px) {
+            .parts-header {
+              flex-direction: column;
+              align-items: flex-start;
+              gap: 15px;
+            }
+            
+            table {
+              display: block;
+              overflow-x: auto;
+            }
+            
+            h1 {
+              font-size: 28px;
+              margin: 40px 0 15px;
+            }
+          }
+          
+          /* Additional 2035 Future Elements */
+          .quantum-scan-icon {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: var(--neon-shadow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+          }
+          
+          .quantum-scan-icon:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 0 25px var(--primary), 0 0 50px rgba(12, 239, 255, 0.5);
+          }
+          
+          .part-availability-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            vertical-align: middle;
+          }
+          
+          .available {
+            background-color: var(--success);
+            box-shadow: 0 0 8px var(--success);
+            animation: pulse 2s infinite;
+          }
+          
+          .limited {
+            background-color: var(--warning);
+            box-shadow: 0 0 8px var(--warning);
+          }
+          
+          .unavailable {
+            background-color: var(--danger);
+            box-shadow: 0 0 8px var(--danger);
+          }
+    </style>
+</head>
+<body>
+    <!-- Holographic Effects -->
+    <div class="hologram-effect hologram-1"></div>
+    <div class="hologram-effect hologram-2"></div>
+    <div class="smart-grid"></div>
+    
+    <!-- Back Button -->
+    <a href="{% url 'company_home' %}" class="btn btn-back">
+        <i class="fas fa-arrow-left"></i>
+        Back to Dashboard
+    </a>
+    
+    <!-- Page Header -->
+    <h1>Spare of {{ vehicle.Vehicle_name }}</h1>
+    
+    {% if spares %}
+    <!-- Parts Container -->
+    <div class="parts-container">
+        <div class="parts-header">
+            <div>
+                <h3 class="parts-title">
+                    <i class="fas fa-microchip"></i>
+                    Available Components
+                </h3>
+                <p class="parts-meta">Total components: {{ spares|length }} | Last updated: Today</p>
+            </div>
+            <div class="parts-actions">
+                <button class="btn btn-add">
+                    <i class="fas fa-plus-circle"></i>
+                    Add New Component
+                </button>
+            </div>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Component Name</th>
+                    <th>Classification</th>
+                    <th>Market Value</th>
+                    <th>Visual</th>
+                    <th>Inventory Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for spare in spares %}
+                <tr>
+                    <td>
+                        <div class="part-name">{{ spare.spare_name }}</div>
+                    </td>
+                    <td>
+                        <span class="part-type">{{ spare.typ }}</span>
+                    </td>
+                    <td>
+                        <div class="part-price">₹{{ spare.price }}</div>
+                    </td>
+                    <td>
+                        {% if spare.image %}
+                        <img src="{{ spare.image.url }}" alt="{{ spare.spare_name }}" class="part-image">
+                        {% else %}
+                        <div class="no-image">
+                            <i class="fas fa-camera-retro"></i>
+                        </div>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="stock-indicator">
+                            {% if spare.stock > 10 %}
+                            <span class="part-availability-indicator available"></span>
+                            <span class="stock-value">{{ spare.stock }}</span>
+                            <span class="stock-badge stock-high">In Stock</span>
+                            {% elif spare.stock > 3 %}
+                            <span class="part-availability-indicator limited"></span>
+                            <span class="stock-value">{{ spare.stock }}</span>
+                            <span class="stock-badge stock-medium">Limited</span>
+                            {% else %}
+                            <span class="part-availability-indicator unavailable"></span>
+                            <span class="stock-value">{{ spare.stock }}</span>
+                            <span class="stock-badge stock-low">Low Stock</span>
+                            {% endif %}
+                        </div>
+                    </td>
+                    <td>
+                      <button class="btn btn-add" onclick="document.getElementById('stockModal').style.display='block'">
+                        <i class="fa-solid fa-plus"></i><a href="{% url 'add_stock' spare.spare_id %}">Add Stock</a>
+                        
+                      </button>
+                    </td>
+                    <td>
+                      <!-- Delete Button -->
+                      <form method="post" action="{% url 'delete_spare' spare.spare_id %}">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this spare?');">
+                              <i class="fas fa-trash"></i> Delete
+                          </button>
+                      </form>
+                  </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <!-- No Parts Message -->
+    <div class="no-parts-message">
+        <i class="fas fa-exclamation-circle no-parts-icon"></i>
+        <h2 class="no-parts-text">No components registered for this vehicle.</h2>
+        <button class="btn-create">
+            <i class="fas fa-plus-circle"></i>
+            Add New Component
+        </button>
+    </div>
+    {% endif %}
+    {% if messages %}
+        <div>
+          {% for message in messages %}
+            <p style="color: green;">{{ message }}</p>
+          {% endfor %}
+        </div>
+    {% endif %}
+    
+    
+    
+</body>
+</html>

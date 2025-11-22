@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Successful</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color:rgb(14, 13, 13); /* Light gray background */
+            color: #333; /* Dark gray text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        h2 {
+            color: #00bcd4; /* Cyan for the main heading */
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #555; /* Medium gray text for details */
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        strong {
+            color: #000; /* Black for strong labels */
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .payment-info {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .payment-info p {
+            margin: 10px 0;
+        }
+
+        .return-home-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 24px;
+            background-color: #00bcd4; /* Cyan for the button background */
+            color: #fff; /* White text for the button */
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .return-home-link:hover {
+            background-color: #008ba7; /* Darker cyan on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Thank You for your purchase!</h2>
+
+        <div class="payment-info">
+            <p><strong>Spare Part:</strong> {{ payment_info.spare_name }}</p>
+            <p><strong>Name:</strong> {{ payment_info.name }}</p>
+            <p><strong>Email:</strong> {{ payment_info.email }}</p>
+            <p><strong>Contact:</strong> {{ payment_info.contact }}</p>
+            <p><strong>Amount Paid:</strong> <span style="color: #00bcd4; font-weight: bold;">₹{{ payment_info.amount }}</span></p>
+            <p><strong>Razorpay Payment ID:</strong> <span style="font-family: monospace;">{{ payment_info.razorpay_payment_id }}</span></p>
+        </div>
+
+        <a href="{% url 'Home' %}" class="return-home-link">Return to Homepage</a>
+    </div>
+</body>
+</html>

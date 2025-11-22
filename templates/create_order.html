@@ -1,0 +1,198 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Summary</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        /* You can move these styles to styles.css */
+        :root {
+            --primary-color: rgba(65, 90, 255, 1);
+            --secondary-color: rgba(210, 60, 255, 0.8);
+            --accent-color: rgba(0, 255, 200, 1);
+            --background: #080c1f;
+            --card-bg: rgba(15, 20, 45, 0.85);
+            --text-primary: rgba(255, 255, 255, 0.95);
+            --text-secondary: rgba(200, 210, 255, 0.8);
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .order-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h2, h3 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .product-img {
+            display: block;
+            margin: 0 auto;
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        table {
+            width: 100%;
+            margin: 2rem 0;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        td {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .pay-btn {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 0.5rem;
+            transition: background 0.3s ease;
+        }
+
+        .cancel-btn {
+            background: #ff4d4d;
+        }
+
+        .pay-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+<div class="order-container">
+    <h2>ORDER SUMMARY</h2>
+
+    <img class="product-img" src="{{ spare.image.url }}" alt="Product Image">
+
+    <h3>{{ spare.spare_name }}</h3>
+    <table>
+        <tr>
+            <td><strong>Type:</strong> {{ spare.typ }}</td>
+            <td><strong>Customer:</strong> {{ user.fname }} {{ user.lname }}</td>
+        </tr>
+        <tr>
+            <td><strong>Price:</strong> ₹{{ order.total_price }}</td>
+            <td><strong>Email:</strong> {{ user.email }}</td>
+        </tr>
+        <tr>
+            <td><strong>Order ID:</strong> {{ order.order_id }}</td>
+            <td><strong>Contact:</strong> {{ user.phone }}</td>
+        </tr>
+    </table>
+
+    <div class="button-container">
+        {% if user.is_authenticated %}
+            <button id="pay-btn" class="pay-btn">Pay Now</button>
+
+            <form action="{% url 'cod_payment' spare_id=spare.spare_id %}" method="GET" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="spare_id" value="{{ spare.spare_id }}">
+                <button type="submit" class="pay-btn">Cash on Delivery</button>
+            </form>
+        {% else %}
+            <a href="{% url 'signin' %}" class="pay-btn">Login to Buy</a>
+        {% endif %}
+
+        <a href="{% url 'payment_cancel' %}" class="pay-btn cancel-btn">Cancel</a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const csrfToken = "{{ csrf_token }}";
+
+        const options = {
+            "key": "{{ razorpay_key }}",
+            "amount": "{{ order.total_price|floatformat:2|floatformat:0 }}00", // Razorpay expects amount in paisa
+            "currency": "INR",
+            "name": "Spare Parts Store",
+            "description": "Purchase Spare Part",
+            "image": "{% static 'your_logo.png' %}",
+            "order_id": "{{ payment_id }}",
+            "handler": function (response) {
+                fetch("{% url 'payment_success_api' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": csrfToken
+                    },
+                    body: JSON.stringify({
+                        order_id: "{{ order.order_id }}",
+                        razorpay_payment_id: response.razorpay_payment_id,
+                        name: "{{ user.fname }} {{ user.lname }}",
+                        email: "{{ user.email }}",
+                        contact: "{{ user.phone }}",
+                        amount: "{{ order.total_price }}",
+                        spare_name: "{{ spare.spare_name }}"
+                    })
+                    
+                })
+                .then(response => response.json())
+                .then(data => {
+                    window.location.href = "{% url 'payment_success_page' %}";
+                })
+                .catch(error => {
+                    console.error("Payment Failed:", error);
+                    alert("There was an issue processing your payment. Please try again.");
+                });
+            },
+            "prefill": {
+                "name": "{{ user.fname }} {{ user.lname }}",
+                "email": "{{ user.email }}",
+                "contact": "{{ user.phone }}"
+            },
+            "theme": {
+                "color": "#415AFF"
+            },
+            "modal": {
+                "ondismiss": function () {
+                    alert("Payment cancelled.");
+                }
+            }
+        };
+
+        const rzp = new Razorpay(options);
+
+        document.getElementById("pay-btn").addEventListener("click", function (e) {
+            e.preventDefault();
+            rzp.open();
+        });
+    });
+</script>
+</body>
+</html>

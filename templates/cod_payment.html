@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #111; /* Dark background */
+            color: #fff; /* White text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            max-width: 500px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid #333; /* Darker border */
+            border-radius: 10px;
+            background-color: #222; /* Slightly lighter dark background */
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2); /* Cyan glow */
+        }
+        h2 {
+            color: #00ffff; /* Cyan heading */
+            margin-bottom: 20px;
+        }
+        .order-summary {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background-color: #333; /* Even lighter dark background */
+            text-align: left;
+        }
+        .order-summary h3 {
+            color: #00ffff; /* Cyan subheading */
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .order-summary p {
+            margin-bottom: 8px;
+        }
+        .order-summary strong {
+            color: #eee; /* Slightly brighter text for emphasis */
+        }
+        .pay-btn {
+            background-color: #00ffff; /* Cyan button */
+            color: #111; /* Dark text on button */
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .pay-btn:hover {
+            background-color: #00dddd; /* Slightly darker cyan on hover */
+        }
+        .cancel-btn {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #aaa; /* Grayish cancel link */
+            transition: color 0.3s ease;
+        }
+        .cancel-btn:hover {
+            color: #eee; /* Lighter gray on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Cash on Delivery (COD) Payment</h2>
+        <p>Please confirm your order for Cash on Delivery.</p>
+
+        <div class="order-summary">
+            <h3>Order Summary</h3>
+            <p><strong>Product:</strong> {{ spare.spare_name }}</p>
+            <p><strong>Total Price:</strong> ₹{{ order.total_price }}</p>
+            <p><strong>Payment Method:</strong> {{ order.payment_method }}</p>
+        </div>
+
+        <form action="{% url 'cod_payment' spare_id=spare.spare_id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="pay-btn">Confirm COD Order</button>
+        </form>
+
+        <a href="{% url 'Home' %}" class="cancel-btn">Go Back</a>
+    </div>
+</body>
+</html>

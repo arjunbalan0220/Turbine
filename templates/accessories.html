@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Turbine Spare House</title>
+  <style>
+    
+
+  
+  body {
+    font-family: Arial, sans-serif;
+    background: url({% static 'images/logg3.jpg' %}) no-repeat center center fixed;
+    background-size: cover;
+    color: black;
+  }
+  
+  button{
+    background: none;
+    border: none;
+  }
+  .container {
+    text-align: center;
+    padding: 50px;
+  }
+  
+  
+  
+  .card-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 60px auto;
+    max-width: 800px;
+    height: 250px;
+    
+  }
+  
+  .card {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 120px;
+  }
+  
+  .card img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .card p {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #fbc02d;
+  }
+  .top-right {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+}
+
+  
+  
+</style>
+</head>
+<body>
+  <form action="" method="post">
+  {% csrf_token %}
+  <a href="{% url 'Home' %}" ><div class="top-right">HOME</div></a>
+
+  <div class="container">
+    
+    <div class="card-container">
+
+     
+      <div class="card">
+        <img src="{% static 'images/dalton.jpg' %}" alt="Car">
+        <a href="{% url 'acc_jacket' %}"><p>Jacket</p></a>
+      </div>
+     
+      
+
+      <div class="card">
+        <img src="{% static 'images/Axor.jpg' %}" alt="Car">
+        <a href="{% url 'acc_helmet' %}"><p>Helmet</p></a>
+      </div>
+
+      <div class="card">
+        <img src="{% static 'images/alu.jpg' %}" alt="Car">
+        <a href="{% url 'acc_lag' %}"><p>Laguage</p></a>
+      </div>
+
+      <div class="card">
+        <img src="{% static 'images/bikelock.jpg' %}" alt="Car">
+        <a href="{% url 'acc_lock' %}"><p>Bike Lock</p></a>
+      </div>
+
+      <div class="card">
+        <img src="{% static 'images/boot2.jpg' %}" alt="Car">
+        <a href="{% url 'acc_boot' %}"><p>Boots</p></a>
+      </div>
+
+      <div class="card">
+        <img src="{% static 'images/knee1.jpg' %}" alt="Car">
+        <a href="{% url 'acc_knee' %}"><p>Knee Pad</p></a>
+      </div>
+
+      <div class="card">
+        <img src="{% static 'images/pant1.jpg' %}" alt="Car">
+        <a href="{% url 'acc_pant' %}"><p>Pant</p></a>
+      </div>
+
+      <div class="card">
+        <img src="{% static 'images/racecarglove.jpg' %}" alt="Car">
+        <a href="{% url 'acc_gloves' %}"><p>Gloves</p></a>
+      </div>
+    </div>
+    
+  </div>
+</form>
+</body>
+</html>
